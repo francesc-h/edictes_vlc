@@ -3,7 +3,7 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 
 azure-functions
-#python-poppler
+python-poppler
 pdf2image
 requests
 tweepy
