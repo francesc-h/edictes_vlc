@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+azure-functions = "*"
+ninja = ">=1.11.*"
+meson-python = "*"
+python-poppler = "*"
+pdf2image = "*"
+requests = "*"
+tweepy = "*"
+pypdf = "*"
+bs4 = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
