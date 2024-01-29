@@ -51,9 +51,8 @@ jobs:
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
         python -m pip install --upgrade pip
-        
-        sudo apt-get install libopenjp2-7-dev libgdk-pixbuf2.0-dev cmake checkinstall
-        sudo apt-get build-dep libpoppler-cpp-dev
+
+        sudo apt-get install libopenjp2-7-dev libgdk-pixbuf2.0-dev cmake checkinstall libpoppler-cpp-dev
 
         cd ~/Downloads
         wget https://poppler.freedesktop.org/poppler-0.73.0.tar.xz
