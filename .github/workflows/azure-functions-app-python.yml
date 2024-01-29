@@ -51,7 +51,22 @@ jobs:
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
         python -m pip install --upgrade pip
-        sudo apt-get install cmake poppler-utils libpoppler-cpp-dev -y
+        
+        sudo apt-get install libopenjp2-7-dev libgdk-pixbuf2.0-dev cmake checkinstall
+        sudo apt-get build-dep libpoppler-cpp-dev
+
+        cd ~/Downloads
+        wget https://poppler.freedesktop.org/poppler-0.73.0.tar.xz
+        tar -xf poppler-0.73.0.tar.xz
+        cd poppler-0.73.0
+
+        mkdir build
+        cd build
+        cmake ..
+        sudo checkinstall make install
+
+        echo "export R_LD_LIBRARY_PATH=\$R_LD_LIBRARY_PATH:/usr/local/lib" >> .bashrc
+
         pip install -r requirements.txt --target=".python_packages/lib/site-packages"
         popd
 
