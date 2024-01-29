@@ -54,7 +54,6 @@ jobs:
 
         sudo apt-get install libopenjp2-7-dev libgdk-pixbuf2.0-dev cmake checkinstall libpoppler-cpp-dev
 
-        cd ~/Downloads
         wget https://poppler.freedesktop.org/poppler-0.73.0.tar.xz
         tar -xf poppler-0.73.0.tar.xz
         cd poppler-0.73.0
