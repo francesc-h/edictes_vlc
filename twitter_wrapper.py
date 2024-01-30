@@ -1,4 +1,5 @@
 from time import sleep
+import tempfile
 import tweepy
 import os
 
@@ -63,10 +64,11 @@ def post_tweets(edictes):
         img = edicte.get("img", False)
         
         if (img):
-            edicte.get("img").save("tmp.png")
+            with tempfile.NamedTemporaryFile(suffix=".png") as tmp:
+                edicte.get("img").save(tmp.name)
         
-            media = client_v1.media_upload(filename="tmp.png")
-            media_ids = [media.media_id]
+                media = client_v1.media_upload(filename=tmp.name)
+                media_ids = [media.media_id]
         else:
             media_ids = None
 
