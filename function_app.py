@@ -46,7 +46,7 @@ def get_published() -> List[Dict]:
 
 
 app = func.FunctionApp()
-@app.schedule(schedule="0 9 1-31 1-12 *", arg_name="myTimer", run_on_startup=True, use_monitor=False) 
+@app.schedule(schedule="0 9 1-31 1-12 *", arg_name="myTimer", run_on_startup=False, use_monitor=False) 
 @app.cosmos_db_input(
     arg_name="prevDocuments", 
     database_name="edictes",

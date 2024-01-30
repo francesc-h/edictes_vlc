@@ -1,9 +1,6 @@
-from pdf2image import convert_from_bytes
-from pypdf import PdfReader
-
 from bs4 import BeautifulSoup
 import requests
-import io
+import fitz
 
 import logging
 
@@ -35,20 +32,21 @@ def process_url(url):
     subtitol = parse_subtitol( doc.select("#detalleCuerpoAnuncio")[0].get_text().strip() )
 
     pdf_url = doc.select_one(".enlaceAnuncio a")["href"]
-    img, pdf_info = download_pdf(pdf_url)
+    pdf_info, img = download_pdf(pdf_url)
     
     return {"subtitol": subtitol, "data": data, "img": img, **pdf_info}
 
 
-def parse_pdf(pdf):
-    reader = PdfReader(
-        io.BytesIO(pdf)
+def parse_pdf(req):
+    doc = fitz.open(
+        stream=req,
+        filetype="pdf"
     )
     
-    text = reader.pages[0].extract_text()
+    text = doc[0].get_text()
     
     info = {}
-    info["id"] = text.split("\n")[2]
+    info["id"] = text.split("\n")[3]
     
     for line in text.split("\n"):
         aux = line.lower()
@@ -60,13 +58,11 @@ def parse_pdf(pdf):
         elif (aux.startswith("emplazamiento")):
             info["on"] = line.split(":")[1].strip()
     
-    return info
+    return info, doc[0].get_pixmap()
 
 
 def download_pdf(url):
     req = requests.get(BASE_URL + url)
-
-    image = convert_from_bytes(req.content)
-    txt = parse_pdf(req.content)
+    txt, img = parse_pdf(req.content)
     
-    return image[0], txt
+    return txt, img

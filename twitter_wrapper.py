@@ -63,7 +63,7 @@ def post_tweets(edictes):
         img = edicte.get("img", False)
         
         if (img):
-            edicte.get("img").save("tmp.png", format="PNG")
+            edicte.get("img").save("tmp.png")
         
             media = client_v1.media_upload(filename="tmp.png")
             media_ids = [media.media_id]
